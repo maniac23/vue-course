@@ -37,11 +37,12 @@
 
 <script>
 export default {
+  emits: ['save-data'],
   data() {
     return {
       firstName: '',
       lastName: '',
-      desription: '',
+      description: '',
       rate: null,
       areas: []
     };
@@ -51,11 +52,11 @@ export default {
       const formData = {
         firstName: this.firstName,
         lastName: this.lastName,
-        desription: this.desription,
+        description: this.description,
         rate: this.rate,
         areas: this.areas
       };
-      console.log(formData);
+      this.$emit('save-data', formData);
     }
   }
 };
