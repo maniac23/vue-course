@@ -8,7 +8,7 @@ export default {
       desription: data.description,
       hourlyRate: data.rate,
       areas: data.areas
-    }
+    };
 
     const response = await fetch(
       `https://vue-test-5122e-default-rtdb.europe-west1.firebasedatabase.app/coaches/${userId}.json`,
@@ -17,9 +17,31 @@ export default {
         body: JSON.stringify(coach)
       }
     );
-    if(!response.ok) {
+    if (!response.ok) {
       console.error('error');
     }
-    context.commit('registerCoach', {...coach, id: userId});
+    context.commit('registerCoach', { ...coach, id: userId });
+  },
+  async loadCoaches(context) {
+    const response = await fetch(
+      `https://vue-test-5122e-default-rtdb.europe-west1.firebasedatabase.app/coaches.json`
+    );
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || 'Failed to fetch coaches');
+    }
+    const coaches = [];
+    for (const key in data) {
+      coaches.push({
+        id: key,
+        firstName: data[key].firstName,
+        lastName: data[key].lastName,
+        desription: data[key].description,
+        hourlyRate: data[key].rate,
+        areas: data[key].areas
+      });
+    }
+
+    context.commit('setCoaches', coaches);
   }
-}
+};
