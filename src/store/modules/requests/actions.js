@@ -40,5 +40,6 @@ export default {
       });
     }
     context.commit('setRequests', requests);
+    context.commit('setFetchTimeStamp');
   }
 };

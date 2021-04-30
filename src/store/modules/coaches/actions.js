@@ -22,7 +22,10 @@ export default {
     }
     context.commit('registerCoach', { ...coach, id: userId });
   },
-  async loadCoaches(context) {
+  async loadCoaches(context, payload ) {
+    if(!payload.forceRefresh && !context.getters.shouldUpdate) {
+      return
+    }
     const response = await fetch(
       `https://vue-test-5122e-default-rtdb.europe-west1.firebasedatabase.app/coaches.json`
     );
